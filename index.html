@@ -1023,7 +1023,7 @@
         <!-- Main Content Dashboard Grid (HIGH FREQUENCY ROW: Checklist, Info & Timer, Notepad) -->
         <div class="grid-layout">
             
-            <!-- CARD 1: Tasks Checklist (No numbering) -->
+            <!-- CARD 1: Tasks Checklist -->
             <div class="card">
                 <h2>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -1150,22 +1150,37 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Gear list builder with Quick Pre-configured Templates -->
+                <!-- Dynamic Gear list builder with Editable Presets -->
                 <div class="tool-widget">
                     <div class="timeline-header" style="margin-bottom: 8px;">
                         <span data-lang="en">Session Gear List</span>
                         <span data-lang="vn">Thiết Bị Sử Dụng</span>
                     </div>
                     
-                    <!-- Pre-configured Gear Presets dropdown switcher -->
+                    <!-- Presets dropdown select switcher -->
                     <div style="margin-bottom: 10px;">
                         <select id="gear-template-select" onchange="loadGearTemplate(this.value)" style="width: 100%; background: #080c14; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 10px; color: var(--accent-primary); font-family: var(--font-sans); font-size: 0.8rem; outline: none; font-weight: bold; cursor: pointer;">
-                            <option value="" disabled selected>⚙️ Load Template</option>
-                            <option value="vocal-modern">Vocal (U87 + 1073)</option>
-                            <option value="vocal-tube">Vocal (C800G + Avalon)</option>
-                            <option value="acoustic">Acoustic Gtr (C414 Pair)</option>
-                            <option value="bass">Bass DI (Radial + RNDI)</option>
+                            <option value="" disabled selected>⚙️ Load Gear Template</option>
                         </select>
+                    </div>
+
+                    <!-- Preset controls (Save active list & Manage Presets) -->
+                    <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+                        <button class="btn" style="flex-grow: 1; padding: 4px; font-size: 0.7rem; justify-content: center; height: 28px; background: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);" onclick="saveCurrentAsTemplate()">
+                            💾 Save Current List
+                        </button>
+                        <button class="btn" style="flex-grow: 1; padding: 4px; font-size: 0.7rem; justify-content: center; height: 28px; background: rgba(168, 85, 247, 0.05); border-color: rgba(168, 85, 247, 0.2);" onclick="toggleTemplateManager()">
+                            🔧 Manage Presets
+                        </button>
+                    </div>
+
+                    <!-- Collapsible Presets Manager Panel -->
+                    <div id="templates-manager-panel" style="display: none; border: 1px dashed var(--border-color); border-radius: 8px; padding: 8px; margin-bottom: 10px; background: rgba(10, 13, 22, 0.5);">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px;">
+                            <span data-lang="en">Saved Custom Templates</span><span data-lang="vn">Mẫu Thiết Bị Đang Có</span>
+                        </div>
+                        <ul id="template-manager-list" style="list-style: none; display: flex; flex-direction: column; gap: 4px; max-height: 85px; overflow-y: auto;">
+                        </ul>
                     </div>
 
                     <div style="display: flex; gap: 6px; margin-bottom: 10px;">
@@ -1265,7 +1280,7 @@
                 
                 <div class="collapsible-content" id="collapsible-content">
                     
-                    <!-- CARD 4 (Old 2): Microphone Miking & Guidelines -->
+                    <!-- CARD 4: Microphone Miking & Guidelines -->
                     <div class="card">
                         <h2>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
@@ -1340,7 +1355,7 @@
                         </ul>
                     </div>
 
-                    <!-- CARD 5: Cabin & Cue Mix Setup -->
+                    <!-- CARD 5: Cabin & Headphone Cue Mix Setup -->
                     <div class="card">
                         <h2>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>
@@ -1400,7 +1415,7 @@
                         <h2>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             <span data-lang="en">Signals & Connectors</span>
-                            <span data-lang="vn">6. Tín Hiệu & Jack Kết Nối</span>
+                            <span data-lang="vn">Tín Hiệu & Jack Kết Nối</span>
                         </h2>
 
                         <!-- Interactive Audio Connector Grid -->
@@ -1595,29 +1610,9 @@
                 }
             }
 
-            // Update gear template dropdown options
-            const tmplSelect = document.getElementById('gear-template-select');
-            if (tmplSelect) {
-                const optDefault = tmplSelect.options[0];
-                const optVocM = tmplSelect.options[1];
-                const optVocT = tmplSelect.options[2];
-                const optAcous = tmplSelect.options[3];
-                const optBass = tmplSelect.options[4];
-                
-                if (lang === 'vn') {
-                    optDefault.text = '⚙️ Load Gear Template';
-                    optVocM.text = 'Vocal (U87 + 1073)';
-                    optVocT.text = 'Vocal (C800G + Avalon)';
-                    optAcous.text = 'Guitar Acoustic (C414)';
-                    optBass.text = 'Bass DI (Radial + RNDI)';
-                } else {
-                    optDefault.text = '⚙️ Load Gear Template';
-                    optVocM.text = 'Vocal (U87 + 1073)';
-                    optVocT.text = 'Vocal (C800G + Avalon)';
-                    optAcous.text = 'Acoustic Gtr (C414 Pair)';
-                    optBass.text = 'Bass DI (Radial + RNDI)';
-                }
-            }
+            // Repopulate dynamic gear templates and manager panel
+            populateTemplatesDropdown();
+            renderTemplatesManager();
         }
 
         // Checklist State Persistence Engine
@@ -1700,34 +1695,191 @@
             renderGearSetup();
         }
 
-        // Gear templates quick loading logic
-        const gearTemplates = {
-            'vocal-modern': [
-                { category: 'Mic', name: 'Neumann U87 Ai' },
-                { category: 'Pre', name: 'Neve 1073' },
-                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
-            ],
-            'vocal-tube': [
-                { category: 'Mic', name: 'Sony C800G' },
-                { category: 'Pre', name: 'Avalon VT-737sp' },
-                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
-            ],
-            'acoustic': [
-                { category: 'Mic', name: 'AKG C414 XLS (Stereo Pair)' },
-                { category: 'Pre', name: 'Solid State Logic Alpha VHD' },
-                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
-            ],
-            'bass': [
-                { category: 'Mic', name: 'Radial J48 Active DI' },
-                { category: 'Pre', name: 'Rupert Neve Designs RNDI' },
-                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
-            ]
+        // Default predefined templates dictionary
+        const defaultTemplates = {
+            'vocal-modern': {
+                nameEn: 'Vocal (U87 + 1073)',
+                nameVn: 'Vocal (U87 + 1073)',
+                gear: [
+                    { category: 'Mic', name: 'Neumann U87 Ai' },
+                    { category: 'Pre', name: 'Neve 1073' },
+                    { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+                ]
+            },
+            'vocal-tube': {
+                nameEn: 'Vocal (C800G + Avalon)',
+                nameVn: 'Vocal (C800G + Avalon)',
+                gear: [
+                    { category: 'Mic', name: 'Sony C800G' },
+                    { category: 'Pre', name: 'Avalon VT-737sp' },
+                    { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+                ]
+            },
+            'acoustic': {
+                nameEn: 'Acoustic Gtr (C414 Pair)',
+                nameVn: 'Guitar Acoustic (C414)',
+                gear: [
+                    { category: 'Mic', name: 'AKG C414 XLS (Stereo Pair)' },
+                    { category: 'Pre', name: 'Solid State Logic Alpha VHD' },
+                    { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+                ]
+            },
+            'bass': {
+                nameEn: 'Bass DI (Radial + RNDI)',
+                nameVn: 'Bass DI (Radial + RNDI)',
+                gear: [
+                    { category: 'Mic', name: 'Radial J48 Active DI' },
+                    { category: 'Pre', name: 'Rupert Neve Designs RNDI' },
+                    { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+                ]
+            }
         };
+
+        let gearTemplates = {};
+
+        function loadAllTemplates() {
+            const saved = localStorage.getItem('mixtools_custom_gear_templates');
+            if (saved) {
+                try {
+                    gearTemplates = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Error parsing saved templates, using defaults", e);
+                    gearTemplates = JSON.parse(JSON.stringify(defaultTemplates));
+                }
+            } else {
+                // Initialize with defaults if none exists
+                gearTemplates = JSON.parse(JSON.stringify(defaultTemplates));
+                saveAllTemplates();
+            }
+            populateTemplatesDropdown();
+            renderTemplatesManager();
+        }
+
+        function saveAllTemplates() {
+            localStorage.setItem('mixtools_custom_gear_templates', JSON.stringify(gearTemplates));
+        }
+
+        function populateTemplatesDropdown() {
+            const select = document.getElementById('gear-template-select');
+            if (!select) return;
+            
+            select.innerHTML = '';
+            
+            // Re-add disabled default placeholder option (always in English)
+            const placeholderOpt = document.createElement('option');
+            placeholderOpt.value = "";
+            placeholderOpt.disabled = true;
+            placeholderOpt.selected = true;
+            placeholderOpt.text = "⚙️ Load Gear Template";
+            select.appendChild(placeholderOpt);
+
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+
+            for (const key in gearTemplates) {
+                const item = gearTemplates[key];
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.text = lang === 'vn' ? item.nameVn : item.nameEn;
+                select.appendChild(opt);
+            }
+        }
+
+        function renderTemplatesManager() {
+            const list = document.getElementById('template-manager-list');
+            if (!list) return;
+            
+            list.innerHTML = '';
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+
+            for (const key in gearTemplates) {
+                const item = gearTemplates[key];
+                const displayName = lang === 'vn' ? item.nameVn : item.nameEn;
+
+                const li = document.createElement('li');
+                li.style.display = 'flex';
+                li.style.justify = 'space-between';
+                li.style.alignItems = 'center';
+                li.style.padding = '5px 8px';
+                li.style.background = 'rgba(10, 13, 22, 0.4)';
+                li.style.border = '1px solid rgba(255, 255, 255, 0.02)';
+                li.style.borderRadius = '6px';
+                li.style.fontSize = '0.75rem';
+
+                li.innerHTML = `
+                    <span style="color: #cbd5e1; font-weight: 500;">${displayName}</span>
+                    <button class="note-delete-btn" onclick="deleteTemplate('${key}')" title="Delete Template" style="padding: 1px 4px; font-size: 0.7rem;">✕</button>
+                `;
+                list.appendChild(li);
+            }
+        }
+
+        function deleteTemplate(key) {
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            const displayName = lang === 'vn' ? gearTemplates[key].nameVn : gearTemplates[key].nameEn;
+            const confirmMsg = lang === 'en'
+                ? `Are you sure you want to delete the template "${displayName}"?`
+                : `Bạn có chắc chắn muốn xóa mẫu thiết bị "${displayName}" không?`;
+            
+            if (confirm(confirmMsg)) {
+                delete gearTemplates[key];
+                saveAllTemplates();
+                populateTemplatesDropdown();
+                renderTemplatesManager();
+            }
+        }
+
+        function saveCurrentAsTemplate() {
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            if (gearSetup.length === 0) {
+                const errorMsg = lang === 'en'
+                    ? "Your active gear list is empty! Please add some gear before saving as a template."
+                    : "Danh sách thiết bị trống! Hãy thêm thiết bị trước khi lưu làm mẫu.";
+                alert(errorMsg);
+                return;
+            }
+
+            const promptMsg = lang === 'en'
+                ? "Enter a name for your custom gear template:"
+                : "Nhập tên cho mẫu thiết bị mới của bạn:";
+            
+            const templateName = prompt(promptMsg);
+            if (!templateName || !templateName.trim()) return;
+
+            const trimmedName = templateName.trim();
+            // Generate a safe key from the name
+            const key = 'custom-' + trimmedName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+
+            gearTemplates[key] = {
+                nameEn: trimmedName,
+                nameVn: trimmedName,
+                gear: JSON.parse(JSON.stringify(gearSetup)) // Deep clone active setup
+            };
+
+            saveAllTemplates();
+            populateTemplatesDropdown();
+            renderTemplatesManager();
+
+            const successMsg = lang === 'en'
+                ? `Template "${trimmedName}" saved successfully!`
+                : `Mẫu "${trimmedName}" đã được lưu thành công!`;
+            alert(successMsg);
+        }
+
+        function toggleTemplateManager() {
+            const panel = document.getElementById('templates-manager-panel');
+            const isCollapsed = panel.style.display === 'none';
+            if (isCollapsed) {
+                panel.style.display = 'block';
+            } else {
+                panel.style.display = 'none';
+            }
+        }
 
         function loadGearTemplate(key) {
             if (!key || !gearTemplates[key]) return;
             
-            gearTemplates[key].forEach(item => {
+            const templateGear = gearTemplates[key].gear;
+            templateGear.forEach(item => {
                 const exists = gearSetup.some(g => g.category === item.category && g.name === item.name);
                 if (!exists) {
                     gearSetup.push(item);
@@ -1780,6 +1932,7 @@
         // Timestamped Quick Notes Logger System
         let quickNotes = [];
 
+        // Load & save functions
         function loadQuickNotes() {
             const saved = localStorage.getItem('mixtools_record_quicknotes');
             if (saved) {
@@ -1831,8 +1984,8 @@
         function confirmPageReset() {
             const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
             const msg = lang === 'en' 
-                ? "Are you sure you want to reset the page? This will clear all checklist items, metadata fields, gear list, notepad, and quick notes. Your session timer will also be reset."
-                : "Bạn có chắc chắn muốn đặt lại trang? Thao tác này sẽ xóa tất cả checklist, thông tin buổi thu, thiết bị sử dụng, sổ tay và ghi chú nhanh. Bộ bấm giờ cũng sẽ được đặt lại.";
+                ? "Are you sure you want to reset the page? This will clear all checklist items, metadata fields, gear list, notepad, and quick notes. Your custom gear templates and session timer will also be reset."
+                : "Bạn có chắc chắn muốn đặt lại trang? Thao tác này sẽ xóa tất cả checklist, thông tin buổi thu, thiết bị sử dụng, sổ tay và ghi chú nhanh. Các mẫu thiết bị tự chọn và bộ bấm giờ cũng sẽ được đặt lại.";
             
             if (confirm(msg)) {
                 // Clear checklists
@@ -1862,6 +2015,9 @@
                 gearSetup = [];
                 localStorage.removeItem('mixtools_record_gear');
                 renderGearSetup();
+
+                // Clear custom gear templates
+                localStorage.removeItem('mixtools_custom_gear_templates');
 
                 // Clear timer without confirmation
                 resetTimerWithoutConfirm();
@@ -2063,7 +2219,8 @@
                             data.levelKey === 'line' ? '75%' : '92%';
             
             setTimeout(() => {
-                document.getElementById('fill-' + data.levelKey).style.width = fillVal;
+                const fillEl = document.getElementById('fill-' + data.levelKey);
+                if (fillEl) fillEl.style.width = fillVal;
             }, 100);
 
             const savedLang = localStorage.getItem('record_lang') || 'en';
@@ -2402,7 +2559,7 @@
     <div class="report-container">
         <header>
             <div class="title">
-                <h1>${lang === 'en' ? 'Recording Session Report' : 'Báo Cáo Buổi Thu Âm'}</h1>
+                <h1>${reportTitle}</h1>
                 <p>Studio Pro Recording Utilities</p>
             </div>
             <div class="timestamp">
@@ -2472,7 +2629,7 @@
         </div>
 
         <footer>
-            <p>${lang === 'en' ? '© 2026 Studio Pro Recording Utilities. All rights reserved.' : '© 2026 Studio Pro Recording Utilities. Bảo lưu mọi quyền.'}</p>
+            <p>© 2026 Studio Pro Recording Utilities. All rights reserved.</p>
         </footer>
     </div>
 </body>
@@ -2493,6 +2650,9 @@
 
         // Initialize Settings on Load
         document.addEventListener('DOMContentLoaded', () => {
+            // Load saved custom templates first
+            loadAllTemplates();
+
             // Load default language settings
             const defaultLang = localStorage.getItem('mixtools_default_lang') || 'en';
             const defSelect = document.getElementById('default-lang-select');
