@@ -1,0 +1,2525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Assistant Guide</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0d16;
+            --bg-card: #131a2a;
+            --border-color: #243147;
+            --text-main: #f8fafc;
+            --text-muted: #8292ab;
+            --accent-primary: #38bdf8;   /* Sky Blue */
+            --accent-purple: #a855f7;    /* Violet */
+            --accent-green: #22c55e;     /* Green */
+            --accent-pink: #ec4899;      /* Pink */
+            --accent-warning: #f59e0b;   /* Amber */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Language-specific visibility styling */
+        body.lang-en [data-lang="vn"] {
+            display: none !important;
+        }
+        body.lang-vn [data-lang="en"] {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 28px;
+            background: rgba(19, 26, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brand h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--accent-primary), #ffffff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Reset Button (Header) */
+        .btn-reset-page {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .btn-reset-page:hover {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            background: rgba(10, 13, 22, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 30px;
+            height: 32px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 24px;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #ffffff;
+        }
+
+        /* Dashboard Grid System */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .full-width {
+            grid-column: 1 / -1 !important;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .card:hover {
+            border-color: rgba(56, 189, 248, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card h2 svg {
+            color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+
+        /* Checklists */
+        .timeline-section {
+            margin-bottom: 20px;
+        }
+
+        .timeline-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-header {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            display: inline-block;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(10, 13, 22, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(10, 13, 22, 0.7);
+            border-color: rgba(56, 189, 248, 0.15);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent-green);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checklist-item span {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            transition: all 0.2s ease;
+        }
+
+        .checklist-item input:checked + span {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Mic Techniques Style */
+        .polar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .polar-badge {
+            background: rgba(10, 13, 22, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--accent-primary);
+            transition: all 0.2s ease;
+        }
+
+        .polar-badge:hover {
+            background: rgba(56, 189, 248, 0.08);
+            border-color: var(--accent-primary);
+            transform: scale(1.03);
+        }
+
+        .section-subtitle {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .section-subtitle:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .technique-list {
+            list-style-type: none;
+            margin-bottom: 12px;
+        }
+
+        .technique-list li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .technique-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .technique-list.inst-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding-left: 0;
+        }
+
+        .technique-list.inst-list li {
+            padding: 4px 10px;
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px dashed rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: #e9d5ff;
+            margin-bottom: 0;
+            font-size: 0.8rem;
+        }
+
+        .technique-list.inst-list li::before {
+            content: "";
+            display: none;
+        }
+
+        /* Widgets styling */
+        .tool-widget {
+            background: #0b0f19;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .tool-widget:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Metadata Input fields layout */
+        .meta-inputs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .meta-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-input-group label {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .meta-input-group input {
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: #cbd5e1;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .meta-input-group input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
+        }
+
+        /* Dynamic Gear Item list builder CSS */
+        .gear-item {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 13, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .gear-item:hover {
+            border-color: rgba(56, 189, 248, 0.15);
+        }
+
+        .gear-category-badge {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .badge-mic { background: rgba(56, 189, 248, 0.1); color: var(--accent-primary); border: 1px solid rgba(56, 189, 248, 0.15); }
+        .badge-pre { background: rgba(168, 85, 247, 0.1); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.15); }
+        .badge-interface { background: rgba(34, 197, 94, 0.1); color: var(--accent-green); border: 1px solid rgba(34, 197, 94, 0.15); }
+
+        .gear-name-text {
+            color: #cbd5e1;
+            flex-grow: 1;
+            word-break: break-word;
+        }
+
+        /* Timer controls */
+        .timer-display {
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-align: center;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            font-family: var(--font-display);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #2e3d54;
+            color: #fff;
+        }
+
+        .btn-start {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: var(--accent-green);
+        }
+
+        .btn-start:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .btn-pause {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--accent-warning);
+        }
+
+        .btn-pause:hover {
+            background: var(--accent-warning);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .btn-reset:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* Notepad & Quick Notes */
+        .notepad-textarea {
+            width: 100%;
+            height: 100px;
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #cbd5e1;
+            padding: 10px;
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            resize: none;
+            outline: none;
+            margin-bottom: 8px;
+            transition: border-color 0.2s ease;
+        }
+
+        .notepad-textarea:focus {
+            border-color: var(--accent-primary);
+        }
+
+        /* Quick Notes logger styling */
+        .quick-note-input-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+
+        .quick-note-input-container input {
+            flex-grow: 1;
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px 10px;
+            color: #cbd5e1;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .quick-note-input-container input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .quick-notes-scroller {
+            max-height: 120px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            background: rgba(10, 13, 22, 0.4);
+            padding: 6px;
+            margin-bottom: 15px;
+        }
+
+        .quick-notes-scroller::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .quick-notes-scroller::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        #quick-notes-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .quick-note-item {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 13, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.82rem;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .quick-note-item:hover {
+            border-color: rgba(56, 189, 248, 0.15);
+        }
+
+        .note-timestamp {
+            color: var(--accent-primary);
+            font-family: ui-monospace, monospace;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .note-content {
+            color: #cbd5e1;
+            flex-grow: 1;
+            word-break: break-word;
+        }
+
+        .note-delete-btn {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            border-radius: 4px;
+        }
+
+        .note-delete-btn:hover {
+            opacity: 1;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-download {
+            width: 100%;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+        }
+
+        .btn-download:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.25);
+        }
+
+        /* Levels visualizer */
+        .levels-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .level-row {
+            background: rgba(10, 13, 22, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .level-row:hover, .level-row.highlighted {
+            background: rgba(10, 13, 22, 0.8);
+            border-color: var(--accent-primary);
+        }
+
+        .level-row.highlighted {
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+        }
+
+        .level-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .level-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .level-range {
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 0.78rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .level-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        .meter-container {
+            height: 5px;
+            background: #0f1422;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .meter-fill {
+            height: 100%;
+            border-radius: 3px;
+            width: 0%; /* Dynamic fill */
+            transition: width 0.4s ease-out;
+        }
+
+        .level-mic .level-name { color: var(--accent-primary); }
+        .level-mic .level-range { color: var(--accent-primary); }
+        .level-mic .meter-fill { background: var(--accent-primary); }
+
+        .level-inst .level-name { color: var(--accent-purple); }
+        .level-inst .level-range { color: var(--accent-purple); }
+        .level-inst .meter-fill { background: var(--accent-purple); }
+
+        .level-line .level-name { color: var(--accent-green); }
+        .level-line .level-range { color: var(--accent-green); }
+        .level-line .meter-fill { background: var(--accent-green); }
+
+        .level-spk .level-name { color: var(--accent-pink); }
+        .level-spk .level-range { color: var(--accent-pink); }
+        .level-spk .meter-fill { background: var(--accent-pink); }
+
+        /* Interactive Audio Connectors */
+        .connectors-badge-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .connector-pill {
+            background: rgba(10, 13, 22, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 8px 4px;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .connector-pill:hover {
+            color: #fff;
+            border-color: var(--accent-primary);
+        }
+
+        .connector-pill.active-pill-mic { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(56, 189, 248, 0.08); }
+        .connector-pill.active-pill-inst { border-color: var(--accent-purple); color: var(--accent-purple); background: rgba(168, 85, 247, 0.08); }
+        .connector-pill.active-pill-line { border-color: var(--accent-green); color: var(--accent-green); background: rgba(34, 197, 94, 0.08); }
+        .connector-pill.active-pill-spk { border-color: var(--accent-pink); color: var(--accent-pink); background: rgba(236, 72, 153, 0.08); }
+
+        .connector-details-box {
+            background: rgba(10, 13, 22, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .connector-label-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-family: var(--font-display);
+            margin-bottom: 4px;
+        }
+
+        /* Warning Notes */
+        .warning-box {
+            background: rgba(245, 158, 11, 0.04);
+            border: 1px dashed rgba(245, 158, 11, 0.25);
+            border-left: 4px solid var(--accent-warning);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .warning-box h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent-warning);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box p {
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        /* Rules Cards */
+        .etiquette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .etiquette-card {
+            background: rgba(10, 13, 22, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: all 0.2s ease;
+        }
+
+        .etiquette-card:hover {
+            border-color: rgba(168, 85, 247, 0.2);
+            background: rgba(10, 13, 22, 0.6);
+        }
+
+        .etiquette-num {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-purple);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .etiquette-text h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+        }
+
+        .etiquette-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* Collapsible Reference Grid Styling */
+        .collapsible-wrapper {
+            margin-top: 30px;
+            grid-column: 1 / -1;
+        }
+
+        .collapsible-header {
+            width: 100%;
+            background: rgba(19, 26, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s ease;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .collapsible-header:hover {
+            border-color: var(--accent-primary);
+            background: rgba(19, 26, 42, 0.9);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .collapsible-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .collapsible-title svg {
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-arrow {
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .collapsible-content {
+            padding-top: 24px;
+            display: none; /* Collapsed by default */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .collapsible-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .collapsible-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Active states for rotating indicators */
+        .collapsible-wrapper.active .collapsible-arrow {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-wrapper.active .collapsible-title svg {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+    <div class="container">
+        <!-- Floating Header -->
+        <header>
+            <div class="brand">
+                <h1>
+                    <span data-lang="en">Recording Assistant Guide</span>
+                    <span data-lang="vn">Cẩm Nang Trợ Lý Phòng Thu</span>
+                </h1>
+                <p>
+                    <span data-lang="en">Studio Pro Guidelines & Utility</span>
+                    <span data-lang="vn">Quy chuẩn phòng thu & Tiện ích trợ lý</span>
+                </p>
+            </div>
+            
+            <div class="header-controls">
+                <!-- Reset Page Button -->
+                <button class="btn-reset-page" onclick="confirmPageReset()" title="Reset All Data">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <span data-lang="en">Reset</span><span data-lang="vn">Đặt lại</span>
+                </button>
+
+                <!-- Default Language Configuration Option -->
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(10, 13, 22, 0.6); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 30px; height: 32px; font-size: 0.75rem;">
+                    <span style="color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.65rem; font-family: var(--font-display);">
+                        <span data-lang="en">Default</span><span data-lang="vn">Mặc định</span>:
+                    </span>
+                    <select id="default-lang-select" onchange="setDefaultLanguage(this.value)" style="background: transparent; border: none; color: var(--accent-primary); font-family: var(--font-display); font-weight: 700; outline: none; cursor: pointer;">
+                        <option value="en" style="background: var(--bg-card); color: var(--text-main);">EN</option>
+                        <option value="vn" style="background: var(--bg-card); color: var(--text-main);">VN</option>
+                    </select>
+                </div>
+                
+                <!-- Active Language Switcher (EN / VN pills) -->
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btn-lang-en" data-target-lang="en" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" id="btn-lang-vn" data-target-lang="vn" onclick="setLanguage('vn')">VN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Dashboard Grid (HIGH FREQUENCY ROW: Checklist, Info & Timer, Notepad) -->
+        <div class="grid-layout">
+            
+            <!-- CARD 1: Tasks Checklist (No numbering) -->
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span data-lang="en">Tasks Checklist</span>
+                    <span data-lang="vn">Checklist Công Việc Trợ Lý</span>
+                </h2>
+                
+                <div class="timeline-section">
+                    <div class="timeline-header">
+                        <span data-lang="en">Before the Session</span>
+                        <span data-lang="vn">Trước Buổi Thu</span>
+                    </div>
+                    <ul class="checklist">
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-setup">
+                            <span>
+                                <span data-lang="en">Set up Control Room and vocal/instrument Cabin</span>
+                                <span data-lang="vn">Thiết lập Control Room và Cabin thu âm</span>
+                            </span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-miking">
+                            <span>
+                                <span data-lang="en">Mount microphones and optimize placement (Miking)</span>
+                                <span data-lang="vn">Chuẩn bị giá đỡ, treo micro và tinh chỉnh vị trí (Miking)</span>
+                            </span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-signal">
+                            <span>
+                                <span data-lang="en">Check audio signals, verify lines and headphone cues</span>
+                                <span data-lang="vn">Kiểm tra tín hiệu âm thanh, thông line và kiểm tra tai nghe</span>
+                            </span>
+                        </label>
+                    </ul>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-header">
+                        <span data-lang="en">During the Session</span>
+                        <span data-lang="vn">Trong Buổi Thu</span>
+                    </div>
+                    <ul class="checklist">
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-adjust">
+                            <span>
+                                <span data-lang="en">Adjust hardware and routing as requested by the Recording Engineer (RE)</span>
+                                <span data-lang="vn">Điều chỉnh thiết bị, preamp, routing theo yêu cầu của Kỹ sư thu âm (RE)</span>
+                            </span>
+                        </label>
+                    </ul>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-header">
+                        <span data-lang="en">After the Session</span>
+                        <span data-lang="vn">Sau Buổi Thu</span>
+                    </div>
+                    <ul class="checklist">
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-preserve">
+                            <span>
+                                <span data-lang="en">Manage, clean, and properly store microphone and hardware assets</span>
+                                <span data-lang="vn">Quản lý, vệ sinh, bảo quản trang thiết bị và cất micro cẩn thận</span>
+                            </span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-clean">
+                            <span>
+                                <span data-lang="en">Tidy up the recording room, serve water, understand item storage rules</span>
+                                <span data-lang="vn">Dọn dẹp phòng thu sạch sẽ, rót nước, nắm vững vị trí cất trữ đồ đạc</span>
+                            </span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" id="chk-record">
+                            <span>
+                                <span data-lang="en">Record and archive exact hardware patch/knob settings used</span>
+                                <span data-lang="vn">Ghi chép và lưu trữ chi tiết các thông số (settings) phần cứng đã dùng</span>
+                            </span>
+                        </label>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CARD 2: Session Info & Timer & Gear Setup -->
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 12l4 4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+                    <span data-lang="en">Session Info & Timer</span>
+                    <span data-lang="vn">Bộ Đếm Giờ & Thông Tin</span>
+                </h2>
+
+                <!-- Metadata Inputs -->
+                <div class="tool-widget">
+                    <div class="timeline-header" style="margin-bottom: 12px;">
+                        <span data-lang="en">Session Details</span>
+                        <span data-lang="vn">Thông Tin Buổi Thu</span>
+                    </div>
+                    <div class="meta-inputs-grid">
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Engineer</span><span data-lang="vn">Kỹ sư RE</span></label>
+                            <input type="text" id="meta-engineer" oninput="saveMetadata()" placeholder="Name...">
+                        </div>
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Assistant</span><span data-lang="vn">Trợ lý</span></label>
+                            <input type="text" id="meta-assistant" oninput="saveMetadata()" placeholder="Name...">
+                        </div>
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Singer</span><span data-lang="vn">Ca sĩ</span></label>
+                            <input type="text" id="meta-singer" oninput="saveMetadata()" placeholder="Name...">
+                        </div>
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Project</span><span data-lang="vn">Dự án</span></label>
+                            <input type="text" id="meta-project" oninput="saveMetadata()" placeholder="Project...">
+                        </div>
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Song / Track</span><span data-lang="vn">Bài hát</span></label>
+                            <input type="text" id="meta-song" oninput="saveMetadata()" placeholder="Song...">
+                        </div>
+                        <div class="meta-input-group">
+                            <label><span data-lang="en">Album</span><span data-lang="vn">Album</span></label>
+                            <input type="text" id="meta-album" oninput="saveMetadata()" placeholder="Album...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Gear list builder with Quick Pre-configured Templates -->
+                <div class="tool-widget">
+                    <div class="timeline-header" style="margin-bottom: 8px;">
+                        <span data-lang="en">Session Gear List</span>
+                        <span data-lang="vn">Thiết Bị Sử Dụng</span>
+                    </div>
+                    
+                    <!-- Pre-configured Gear Presets dropdown switcher -->
+                    <div style="margin-bottom: 10px;">
+                        <select id="gear-template-select" onchange="loadGearTemplate(this.value)" style="width: 100%; background: #080c14; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 10px; color: var(--accent-primary); font-family: var(--font-sans); font-size: 0.8rem; outline: none; font-weight: bold; cursor: pointer;">
+                            <option value="" disabled selected>⚙️ Load Template</option>
+                            <option value="vocal-modern">Vocal (U87 + 1073)</option>
+                            <option value="vocal-tube">Vocal (C800G + Avalon)</option>
+                            <option value="acoustic">Acoustic Gtr (C414 Pair)</option>
+                            <option value="bass">Bass DI (Radial + RNDI)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+                        <select id="gear-category" style="background: #080c14; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; color: #cbd5e1; font-family: var(--font-sans); font-size: 0.8rem; outline: none; width: 100px;">
+                            <option value="Mic">🎙️ Mic</option>
+                            <option value="Pre">🎛️ Preamp</option>
+                            <option value="Interface">🔌 Interface</option>
+                        </select>
+                        <input type="text" id="gear-name" placeholder="Gear model..." style="flex-grow: 1; background: #080c14; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 10px; color: #cbd5e1; font-family: var(--font-sans); font-size: 0.8rem; outline: none;" onkeydown="if(event.key==='Enter') addGearItem()">
+                        <button class="btn btn-start" style="padding: 0 10px; border-radius: 6px; font-size: 0.75rem; height: 32px;" onclick="addGearItem()">
+                            <span data-lang="en">Add</span><span data-lang="vn">Thêm</span>
+                        </button>
+                    </div>
+
+                    <div class="quick-notes-scroller" style="max-height: 90px; margin-bottom: 0;">
+                        <ul id="gear-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Session Stopwatch -->
+                <div class="tool-widget">
+                    <div class="timeline-header" style="margin-bottom: 8px;">
+                        <span data-lang="en">Session Billing Timer</span>
+                        <span data-lang="vn">Bộ Bấm Giờ Buổi Thu</span>
+                    </div>
+                    <div class="timer-display" id="session-timer">00:00:00</div>
+                    <div class="timer-controls">
+                        <button class="btn btn-start" id="timer-start-btn" onclick="startTimer()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                            <span data-lang="en">Start</span><span data-lang="vn">Bắt đầu</span>
+                        </button>
+                        <button class="btn btn-pause" id="timer-pause-btn" onclick="pauseTimer()" style="display:none;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+                            <span data-lang="en">Pause</span><span data-lang="vn">Tạm dừng</span>
+                        </button>
+                        <button class="btn btn-reset" onclick="resetTimer()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                            <span data-lang="en">Reset</span><span data-lang="vn">Đặt lại</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3: Session Logs & Notes -->
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    <span data-lang="en">Session Logs & Notes</span>
+                    <span data-lang="vn">Sổ Tay & Nhật Ký Buổi Thu</span>
+                </h2>
+
+                <div class="tool-widget" style="flex-grow: 1; display: flex; flex-direction: column; margin-bottom: 0;">
+                    <!-- Sổ tay chính -->
+                    <div class="timeline-header" style="margin-bottom: 8px;">
+                        <span data-lang="en">Session Main Notes</span>
+                        <span data-lang="vn">Ghi Chú Buổi Thu Chính</span>
+                    </div>
+                    <textarea class="notepad-textarea" id="session-notes" placeholder="e.g. Lead Vocals on Neumann U87 Ai. Preamp: Neve 1073 (+35dB gain)..." oninput="saveNotes()" style="flex-grow: 1; min-height: 80px;"></textarea>
+
+                    <!-- Ghi chú nhanh (Quick Notes) -->
+                    <div class="timeline-header" style="margin-bottom: 6px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; margin-top: 8px;">
+                        <span data-lang="en">Quick Logs (with timestamp)</span>
+                        <span data-lang="vn">Nhật Ký Nhanh (Gắn mốc thời gian)</span>
+                    </div>
+                    
+                    <div class="quick-notes-scroller" style="max-height: 110px;">
+                        <ul id="quick-notes-list"></ul>
+                    </div>
+
+                    <!-- Ô nhập ghi chú nhanh -->
+                    <div class="quick-note-input-container">
+                        <input type="text" id="quick-note-input" placeholder="Quick event log..." onkeydown="if(event.key==='Enter') addQuickNote()">
+                        <button class="btn btn-start" style="padding: 0 14px; border-radius: 6px;" onclick="addQuickNote()">
+                            <span data-lang="en">Add</span><span data-lang="vn">Thêm</span>
+                        </button>
+                    </div>
+
+                    <!-- Exporter Download Button -->
+                    <button class="btn btn-download" style="margin-top: 10px;" onclick="downloadSessionReport()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span data-lang="en">Download HTML Report</span>
+                        <span data-lang="vn">Tải Báo Cáo HTML</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- COLLAPSIBLE REFERENCE CONTAINER FOR THE REST OF THE CARDS (2, 5, 6, 7) -->
+            <div class="collapsible-wrapper">
+                <button class="collapsible-header" onclick="toggleCollapsible()">
+                    <span class="collapsible-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.3s ease;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span data-lang="en">Reference Guidelines & Cheat Sheets (Click to Expand)</span>
+                        <span data-lang="vn">Tài Liệu Hướng Dẫn & Tra Cứu Hỗ Trợ (Click để mở rộng)</span>
+                    </span>
+                    <span class="collapsible-arrow" id="collapsible-arrow" style="transition: transform 0.3s ease;">▼</span>
+                </button>
+                
+                <div class="collapsible-content" id="collapsible-content">
+                    
+                    <!-- CARD 4 (Old 2): Microphone Miking & Guidelines -->
+                    <div class="card">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                            <span data-lang="en">Miking & Placement</span>
+                            <span data-lang="vn">Kỹ Thuật Đặt Micro (Miking)</span>
+                        </h2>
+
+                        <div class="section-subtitle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                            <span data-lang="en">Microphone Polar Patterns</span>
+                            <span data-lang="vn">Các Mô Hình Cực Của Mic</span>
+                        </div>
+                        <div class="polar-grid">
+                            <div class="polar-badge" title="Focuses front sound capture, rejects rear sound">Cardioid</div>
+                            <div class="polar-badge" title="Captures sound equally from all directions">Omni</div>
+                            <div class="polar-badge" title="Captures front and back sound, rejects sides">Figure-8</div>
+                            <div class="polar-badge" title="Narrow front focus, tight rear capture">Supercardioid</div>
+                            <div class="polar-badge" title="Extremely narrow front focus, minor rear lobe">Hypercardioid</div>
+                        </div>
+
+                        <div class="section-subtitle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path></svg>
+                            <span data-lang="en">Vocal Placement Guide</span>
+                            <span data-lang="vn">Miking cho Vocal</span>
+                        </div>
+                        <ul class="technique-list">
+                            <li>
+                                <strong data-lang="en">Tube Microphones:</strong><strong data-lang="vn">Mic Tube (Bóng Đèn):</strong>
+                                <span data-lang="en">Hang upside down to prevent tube heat from altering the microphone capsule response.</span>
+                                <span data-lang="vn">Treo ngược mic để nhiệt độ từ bóng đèn bay lên trên, không gây tích nhiệt làm giảm thọ capsule.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Capsule Angle:</strong><strong data-lang="vn">Góc Màng Mic:</strong>
+                                <span data-lang="en">Point down at singer's upper lip. Reduces nose air blasts and throat harshness naturally.</span>
+                                <span data-lang="vn">Góc mic hơi hướng xuống, chĩa vào môi trên ca sĩ. Tránh luồng hơi mũi thổi trực tiếp và giảm sibilance.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Proximity Effect:</strong><strong data-lang="vn">Hiệu Ứng Gần:</strong>
+                                <span data-lang="en">Moving closer increases bass response. Adjust singer-to-mic distance to maintain balanced low-end.</span>
+                                <span data-lang="vn">Khoảng cách càng gần thì bass càng dày. Cân đối khoảng cách của ca sĩ để tránh âm trầm quá mức.</span>
+                            </li>
+                        </ul>
+
+                        <div class="section-subtitle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            <span data-lang="en">Stereo Instrument Miking</span>
+                            <span data-lang="vn">Cấu Hình Thu Stereo Nhạc Cụ</span>
+                        </div>
+                        <ul class="technique-list inst-list">
+                            <li>Mono</li>
+                            <li>A - B (Spaced)</li>
+                            <li>X - Y (Coincident)</li>
+                            <li>Dual Mono</li>
+                        </ul>
+
+                        <div class="section-subtitle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span data-lang="en">Mic Placement Rules</span>
+                            <span data-lang="vn">Quy Tắc Đặt Micro Bổ Trợ</span>
+                        </div>
+                        <ul class="technique-list">
+                            <li>
+                                <strong data-lang="en">The 3-to-1 Rule:</strong><strong data-lang="vn">Quy Tắc 3:1:</strong>
+                                <span data-lang="en">When using multiple microphones, the distance between mics must be at least 3x the distance from each mic to its source to avoid phase cancellations.</span>
+                                <span data-lang="vn">Khi dùng nhiều mic, khoảng cách giữa các mic phải ít nhất bằng 3 lần khoảng cách từ mic tới nguồn âm để tránh triệt tiêu pha.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Pop Filter Spacing:</strong><strong data-lang="vn">Khoảng Cách Màng Lọc:</strong>
+                                <span data-lang="en">Place pop filter 3-4 inches (one fist width) from the microphone capsule, and the singer 5-6 inches from the filter.</span>
+                                <span data-lang="vn">Đặt pop filter cách màng mic 3-4 inches (khoảng 1 nắm tay) và ca sĩ đứng cách filter khoảng 5-6 inches.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- CARD 5: Cabin & Cue Mix Setup -->
+                    <div class="card">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>
+                            <span data-lang="en">Cabin & Headphone Cue</span>
+                            <span data-lang="vn">Bố Trí Cabin & Headphone Cue</span>
+                        </h2>
+
+                        <div class="section-subtitle" style="margin-top: 0; padding-top: 0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                            <span data-lang="en">Headphone Cue Mix Rules</span>
+                            <span data-lang="vn">Thiết Lập Tai Nghe Ca Sĩ (Cue Mix)</span>
+                        </div>
+                        <ul class="technique-list">
+                            <li>
+                                <strong data-lang="en">Zero-Latency Cues:</strong><strong data-lang="vn">Tránh Trễ Tiếng:</strong>
+                                <span data-lang="en">Ensure monitoring feed is directly routed with zero latency (buffer buffer-sizes < 64 samples).</span>
+                                <span data-lang="vn">Đảm bảo đường nghe của nghệ sĩ không bị trễ (Sử dụng direct monitoring hoặc Buffer Size dưới 64 samples).</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Vocal Confidence Boost:</strong><strong data-lang="vn">Kích Thích Tự Tin:</strong>
+                                <span data-lang="en">Keep vocals slightly prominent and add a touch of zero-latency "comfort reverb/delay".</span>
+                                <span data-lang="vn">Đẩy tiếng vocal to hơn beat một chút trong tai nghe của họ và chèn thêm chút reverb/delay phụ trợ.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Click Level Check:</strong><strong data-lang="vn">Kiểm Tra Nhịp Click:</strong>
+                                <span data-lang="en">Verify click volume. Ensure click does not bleed into the vocal recording microphone.</span>
+                                <span data-lang="vn">Kiểm tra âm lượng nhịp click. Chú ý tránh tiếng lách cách (bleed) lọt vào micro.</span>
+                            </li>
+                        </ul>
+
+                        <div class="section-subtitle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"></path></svg>
+                            <span data-lang="en">Singer Vocal Health & Vibe</span>
+                            <span data-lang="vn">Chăm Sóc Ca Sĩ & Mood Làm Việc</span>
+                        </div>
+                        <ul class="technique-list">
+                            <li>
+                                <strong data-lang="en">Hydration:</strong><strong data-lang="vn">Nước Uống:</strong>
+                                <span data-lang="en">Provide room-temperature water. Avoid ice or cold water. Warm tea with honey is optimal.</span>
+                                <span data-lang="vn">Chuẩn bị sẵn nước lọc ở nhiệt độ phòng. Tuyệt đối không dùng nước đá. Trà ấm mật ong là tốt nhất.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Cabin Temperature:</strong><strong data-lang="vn">Nhiệt Độ Cabin:</strong>
+                                <span data-lang="en">Maintain room temperature between 22-24°C inside the booth. Cold restricts vocal cords.</span>
+                                <span data-lang="vn">Giữ nhiệt độ phòng cabin khoảng 22-24°C. Quá lạnh sẽ làm cơ thể cứng lại và ảnh hưởng giọng hát.</span>
+                            </li>
+                            <li>
+                                <strong data-lang="en">Visual Mood:</strong><strong data-lang="vn">Ánh Sáng & Vibe:</strong>
+                                <span data-lang="en">Dim booth lights or use warm ambient lighting to reduce performance anxiety.</span>
+                                <span data-lang="vn">Hạ bớt đèn cabin hoặc chỉnh ánh sáng vàng ấm áp để ca sĩ bớt hồi hộp.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- CARD 6: Signals & Connectors -->
+                    <div class="card">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            <span data-lang="en">Signals & Connectors</span>
+                            <span data-lang="vn">6. Tín Hiệu & Jack Kết Nối</span>
+                        </h2>
+
+                        <!-- Interactive Audio Connector Grid -->
+                        <div class="section-subtitle" style="margin-top: 0; padding-top: 0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"></path></svg>
+                            <span data-lang="en">Select Connector Type</span>
+                            <span data-lang="vn">Chọn loại kết nối Jack</span>
+                        </div>
+                        <div class="connectors-badge-grid">
+                            <div class="connector-pill" id="pill-xlr" onclick="selectConnector('xlr')">XLR</div>
+                            <div class="connector-pill" id="pill-trs" onclick="selectConnector('trs')">TRS</div>
+                            <div class="connector-pill" id="pill-ts" onclick="selectConnector('ts')">TS</div>
+                            <div class="connector-pill" id="pill-speak" onclick="selectConnector('speak')">Speakon</div>
+                        </div>
+
+                        <!-- Connector Details Info Box -->
+                        <div class="connector-details-box" id="connector-info-box">
+                            <div id="conn-default-text">
+                                <span data-lang="en">Select a connector to view properties and levels...</span>
+                                <span data-lang="vn">Chọn loại Jack để xem chi tiết...</span>
+                            </div>
+                        </div>
+
+                        <div class="levels-stack">
+                            <!-- Mic Level -->
+                            <div class="level-row level-mic" id="row-mic" onclick="highlightFromRow('mic')">
+                                <div class="level-meta">
+                                    <span class="level-name">Mic Level</span>
+                                    <span class="level-range">-80 to -30 dBu</span>
+                                </div>
+                                <div class="level-desc">
+                                    <span data-lang="en">Balanced microphone signal via 3-pin XLR. Needs preamp.</span>
+                                    <span data-lang="vn">Tín hiệu mic balance qua jack XLR 3 chân. Cần preamp nâng.</span>
+                                </div>
+                                <div class="meter-container"><div class="meter-fill" id="fill-mic"></div></div>
+                            </div>
+
+                            <!-- Instrument Level -->
+                            <div class="level-row level-inst" id="row-inst" onclick="highlightFromRow('inst')">
+                                <div class="level-meta">
+                                    <span class="level-name">Instrument Level</span>
+                                    <span class="level-range">-30 to -20 dBu</span>
+                                </div>
+                                <div class="level-desc">
+                                    <span data-lang="en">Hi-Z unbalanced guitar/bass signals. Uses DI Box.</span>
+                                    <span data-lang="vn">Tín hiệu unbalanced trở kháng cao của guitar/bass. Cần DI box.</span>
+                                </div>
+                                <div class="meter-container"><div class="meter-fill" id="fill-inst"></div></div>
+                            </div>
+
+                            <!-- Line Level -->
+                            <div class="level-row level-line" id="row-line" onclick="highlightFromRow('line')">
+                                <div class="level-meta">
+                                    <span class="level-name">Line Level</span>
+                                    <span class="level-range">+4 dBu / -10 dBV</span>
+                                </div>
+                                <div class="level-desc">
+                                    <span data-lang="en">Standard pro operating levels for hardware outboard devices.</span>
+                                    <span data-lang="vn">Mức hoạt động tiêu chuẩn cho thiết bị ngoại vi và soundcard.</span>
+                                </div>
+                                <div class="meter-container"><div class="meter-fill" id="fill-line"></div></div>
+                            </div>
+
+                            <!-- Speaker Level -->
+                            <div class="level-row level-spk" id="row-spk" onclick="highlightFromRow('spk')">
+                                <div class="level-meta">
+                                    <span class="level-name">Speaker Level</span>
+                                    <span class="level-range">High Power (+30 dBu+)</span>
+                                </div>
+                                <div class="level-desc">
+                                    <span data-lang="en">High current output for passive monitors. Never patch to inputs!</span>
+                                    <span data-lang="vn">Điện áp dòng lớn cấp cho loa. Tuyệt đối không cắm vào ngõ vào!</span>
+                                </div>
+                                <div class="meter-container"><div class="meter-fill" id="fill-spk"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span data-lang="en">CRITICAL ROUTING NOTICE</span>
+                                <span data-lang="vn">LƯU Ý ĐẤU NỐI QUAN TRỌNG</span>
+                            </h4>
+                            <p>
+                                <span data-lang="en">Never connect a Speaker Level output to a Mic/Line input. The voltage will permanently burn input circuits.</span>
+                                <span data-lang="vn">Tuyệt đối không nối đường loa Speaker Level vào cổng nhận Mic/Line. Tín hiệu cực lớn sẽ làm cháy bo mạch.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- CARD 7: Professional Etiquette & Rules (Spans full width inside collapsible content) -->
+                    <div class="card full-width">
+                        <h2>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span data-lang="en">Professional Etiquette & Rules</span>
+                            <span data-lang="vn">Quy Tắc Ứng Xử Của Trợ Lý Phòng Thu</span>
+                        </h2>
+
+                        <div class="etiquette-grid">
+                            <!-- Rule 1 -->
+                            <div class="etiquette-card">
+                                <div class="etiquette-num">01</div>
+                                <div class="etiquette-text">
+                                    <h3 data-lang="en">Presentation & Tidiness</h3>
+                                    <h3 data-lang="vn">Trang Phục Tươm Tất</h3>
+                                    <p data-lang="en">Dress professionally, cleanly, and neatly. Your appearance reflects the professionalism of the recording studio.</p>
+                                    <p data-lang="vn">Trang phục lịch sự, tươm tất, đầu tóc gọn gàng. Tác phong làm việc thể hiện độ tin cậy và chuyên nghiệp của phòng thu.</p>
+                                </div>
+                            </div>
+
+                            <!-- Rule 2 -->
+                            <div class="etiquette-card">
+                                <div class="etiquette-num">02</div>
+                                <div class="etiquette-text">
+                                    <h3 data-lang="en">Communication Protocol</h3>
+                                    <h3 data-lang="vn">Giao Tiếp Đúng Mực</h3>
+                                    <p data-lang="en">Do not voice suggestions, feedback, or opinions unless explicitly asked. Share all notes and observations privately with the Recording Engineer (RE).</p>
+                                    <p data-lang="vn">Không tự ý phát biểu hay đưa ra góp ý trừ khi được hỏi trực tiếp. Mọi thắc mắc, đề xuất hãy ghi nhận lại và trao đổi riêng với Kỹ sư Thu âm (RE).</p>
+                                </div>
+                            </div>
+
+                            <!-- Rule 3 -->
+                            <div class="etiquette-card">
+                                <div class="etiquette-num">03</div>
+                                <div class="etiquette-text">
+                                    <h3 data-lang="en">Protect the Creative Vibe</h3>
+                                    <h3 data-lang="vn">Bảo Vệ Không Khí Phòng Thu</h3>
+                                    <p data-lang="en">Never disrupt the creative vibe or comfort of the artist, the client, or the Recording Engineer. Maintain a calm, positive, and supportive atmosphere.</p>
+                                    <p data-lang="vn">Không làm ảnh hưởng hay phá hỏng tâm trạng (mood) của ca sĩ, khách hàng và RE. Giữ thái độ nhiệt tình, im lặng quan sát và hỗ trợ nhanh chóng khi cần.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <span data-lang="en">© 2026 Studio Pro Recording Utilities. Designed for Professional Assistant Workflows.</span>
+            <span data-lang="vn">© 2026 Studio Pro Recording Utilities. Thiết kế cho quy trình hỗ trợ trợ lý phòng thu chuyên nghiệp.</span>
+        </footer>
+    </div>
+
+    <!-- JavaScript Controller -->
+    <script>
+        // Set default language configuration
+        function setDefaultLanguage(lang) {
+            localStorage.setItem('mixtools_default_lang', lang);
+            setLanguage(lang);
+        }
+
+        // Language switching engine
+        function setLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            localStorage.setItem('record_lang', lang);
+            
+            // Switch active indicator on buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-target-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update dynamic gear labels
+            renderGearSetup();
+
+            // Update default lang dropdown selection
+            const defSelect = document.getElementById('default-lang-select');
+            if (defSelect) {
+                defSelect.value = localStorage.getItem('mixtools_default_lang') || 'en';
+            }
+
+            // Update gear category dropdown options
+            const optMic = document.querySelector('#gear-category option[value="Mic"]');
+            const optPre = document.querySelector('#gear-category option[value="Pre"]');
+            const optInt = document.querySelector('#gear-category option[value="Interface"]');
+            
+            if (optMic && optPre && optInt) {
+                if (lang === 'vn') {
+                    optMic.text = '🎙️ Micro';
+                    optPre.text = '🎛️ Preamp';
+                    optInt.text = '🔌 Soundcard';
+                } else {
+                    optMic.text = '🎙️ Mic';
+                    optPre.text = '🎛️ Preamp';
+                    optInt.text = '🔌 Interface';
+                }
+            }
+
+            // Update gear template dropdown options
+            const tmplSelect = document.getElementById('gear-template-select');
+            if (tmplSelect) {
+                const optDefault = tmplSelect.options[0];
+                const optVocM = tmplSelect.options[1];
+                const optVocT = tmplSelect.options[2];
+                const optAcous = tmplSelect.options[3];
+                const optBass = tmplSelect.options[4];
+                
+                if (lang === 'vn') {
+                    optDefault.text = '⚙️ Load Gear Template';
+                    optVocM.text = 'Vocal (U87 + 1073)';
+                    optVocT.text = 'Vocal (C800G + Avalon)';
+                    optAcous.text = 'Guitar Acoustic (C414)';
+                    optBass.text = 'Bass DI (Radial + RNDI)';
+                } else {
+                    optDefault.text = '⚙️ Load Gear Template';
+                    optVocM.text = 'Vocal (U87 + 1073)';
+                    optVocT.text = 'Vocal (C800G + Avalon)';
+                    optAcous.text = 'Acoustic Gtr (C414 Pair)';
+                    optBass.text = 'Bass DI (Radial + RNDI)';
+                }
+            }
+        }
+
+        // Checklist State Persistence Engine
+        function initChecklist() {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                // Load state from localStorage
+                const savedVal = localStorage.getItem('mixtools_record_' + cb.id);
+                if (savedVal !== null) {
+                    cb.checked = savedVal === 'true';
+                }
+
+                // Add event listener to write back state updates
+                cb.addEventListener('change', () => {
+                    localStorage.setItem('mixtools_record_' + cb.id, cb.checked);
+                });
+            });
+        }
+
+        // Main notes auto-save
+        function saveNotes() {
+            const notesVal = document.getElementById('session-notes').value;
+            localStorage.setItem('mixtools_record_notes', notesVal);
+        }
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('mixtools_record_notes');
+            if (savedNotes !== null) {
+                document.getElementById('session-notes').value = savedNotes;
+            }
+        }
+
+        // Metadata fields auto-save
+        function saveMetadata() {
+            const fields = ['engineer', 'assistant', 'singer', 'project', 'song', 'album'];
+            fields.forEach(field => {
+                const val = document.getElementById('meta-' + field).value;
+                localStorage.setItem('mixtools_record_meta_' + field, val);
+            });
+        }
+
+        function loadMetadata() {
+            const fields = ['engineer', 'assistant', 'singer', 'project', 'song', 'album'];
+            fields.forEach(field => {
+                const saved = localStorage.getItem('mixtools_record_meta_' + field);
+                if (saved !== null) {
+                    document.getElementById('meta-' + field).value = saved;
+                }
+            });
+        }
+
+        // Dynamic Studio Gear List Builder
+        let gearSetup = [];
+
+        function loadGearSetup() {
+            const saved = localStorage.getItem('mixtools_record_gear');
+            if (saved) {
+                gearSetup = JSON.parse(saved);
+            } else {
+                gearSetup = [];
+            }
+            renderGearSetup();
+        }
+
+        function saveGearSetup() {
+            localStorage.setItem('mixtools_record_gear', JSON.stringify(gearSetup));
+        }
+
+        function addGearItem() {
+            const input = document.getElementById('gear-name');
+            const name = input.value.trim();
+            if (!name) return;
+
+            const categorySelect = document.getElementById('gear-category');
+            const category = categorySelect.value; // 'Mic', 'Pre', 'Interface'
+
+            gearSetup.push({ category: category, name: name });
+            input.value = '';
+            saveGearSetup();
+            renderGearSetup();
+        }
+
+        // Gear templates quick loading logic
+        const gearTemplates = {
+            'vocal-modern': [
+                { category: 'Mic', name: 'Neumann U87 Ai' },
+                { category: 'Pre', name: 'Neve 1073' },
+                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+            ],
+            'vocal-tube': [
+                { category: 'Mic', name: 'Sony C800G' },
+                { category: 'Pre', name: 'Avalon VT-737sp' },
+                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+            ],
+            'acoustic': [
+                { category: 'Mic', name: 'AKG C414 XLS (Stereo Pair)' },
+                { category: 'Pre', name: 'Solid State Logic Alpha VHD' },
+                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+            ],
+            'bass': [
+                { category: 'Mic', name: 'Radial J48 Active DI' },
+                { category: 'Pre', name: 'Rupert Neve Designs RNDI' },
+                { category: 'Interface', name: 'Universal Audio Apollo x8p' }
+            ]
+        };
+
+        function loadGearTemplate(key) {
+            if (!key || !gearTemplates[key]) return;
+            
+            gearTemplates[key].forEach(item => {
+                const exists = gearSetup.some(g => g.category === item.category && g.name === item.name);
+                if (!exists) {
+                    gearSetup.push(item);
+                }
+            });
+
+            saveGearSetup();
+            renderGearSetup();
+            
+            // Reset select dropdown back to index 0 (Load Template)
+            document.getElementById('gear-template-select').selectedIndex = 0;
+        }
+
+        function deleteGearItem(index) {
+            gearSetup.splice(index, 1);
+            saveGearSetup();
+            renderGearSetup();
+        }
+
+        function renderGearSetup() {
+            const list = document.getElementById('gear-list');
+            list.innerHTML = '';
+            
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            
+            gearSetup.forEach((item, index) => {
+                let label = item.category;
+                if (item.category === 'Mic') {
+                    label = lang === 'en' ? '🎙️ Mic' : '🎙️ Micro';
+                } else if (item.category === 'Pre') {
+                    label = lang === 'en' ? '🎛️ Preamp' : '🎛️ Preamp';
+                } else if (item.category === 'Interface') {
+                    label = lang === 'en' ? '🔌 Interface' : '🔌 Soundcard';
+                }
+                
+                const badgeClass = item.category === 'Mic' ? 'badge-mic' : 
+                                   item.category === 'Pre' ? 'badge-pre' : 'badge-interface';
+
+                const li = document.createElement('li');
+                li.className = 'gear-item';
+                li.innerHTML = `
+                    <span class="gear-category-badge ${badgeClass}">${label}</span>
+                    <span class="gear-name-text">${item.name}</span>
+                    <button class="note-delete-btn" onclick="deleteGearItem(${index})" title="Delete Gear">✕</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Timestamped Quick Notes Logger System
+        let quickNotes = [];
+
+        function loadQuickNotes() {
+            const saved = localStorage.getItem('mixtools_record_quicknotes');
+            if (saved) {
+                quickNotes = JSON.parse(saved);
+            } else {
+                quickNotes = [];
+            }
+            renderQuickNotes();
+        }
+
+        function saveQuickNotes() {
+            localStorage.setItem('mixtools_record_quicknotes', JSON.stringify(quickNotes));
+        }
+
+        function addQuickNote() {
+            const input = document.getElementById('quick-note-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const timeStr = new Date().toTimeString().split(' ')[0]; // "HH:MM:SS"
+            quickNotes.push({ time: timeStr, text: text });
+            input.value = '';
+            saveQuickNotes();
+            renderQuickNotes();
+        }
+
+        function deleteQuickNote(index) {
+            quickNotes.splice(index, 1);
+            saveQuickNotes();
+            renderQuickNotes();
+        }
+
+        function renderQuickNotes() {
+            const list = document.getElementById('quick-notes-list');
+            list.innerHTML = '';
+            quickNotes.forEach((note, index) => {
+                const li = document.createElement('li');
+                li.className = 'quick-note-item';
+                li.innerHTML = `
+                    <span class="note-timestamp">[${note.time}]</span>
+                    <span class="note-content">${note.text}</span>
+                    <button class="note-delete-btn" onclick="deleteQuickNote(${index})" title="Delete Note">✕</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Page reset confirmation prompt
+        function confirmPageReset() {
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            const msg = lang === 'en' 
+                ? "Are you sure you want to reset the page? This will clear all checklist items, metadata fields, gear list, notepad, and quick notes. Your session timer will also be reset."
+                : "Bạn có chắc chắn muốn đặt lại trang? Thao tác này sẽ xóa tất cả checklist, thông tin buổi thu, thiết bị sử dụng, sổ tay và ghi chú nhanh. Bộ bấm giờ cũng sẽ được đặt lại.";
+            
+            if (confirm(msg)) {
+                // Clear checklists
+                const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+                checkboxes.forEach(cb => {
+                    cb.checked = false;
+                    localStorage.removeItem('mixtools_record_' + cb.id);
+                });
+
+                // Clear main notes
+                document.getElementById('session-notes').value = '';
+                localStorage.removeItem('mixtools_record_notes');
+
+                // Clear metadata
+                const fields = ['engineer', 'assistant', 'singer', 'project', 'song', 'album'];
+                fields.forEach(field => {
+                    document.getElementById('meta-' + field).value = '';
+                    localStorage.removeItem('mixtools_record_meta_' + field);
+                });
+
+                // Clear quick notes
+                quickNotes = [];
+                localStorage.removeItem('mixtools_record_quicknotes');
+                renderQuickNotes();
+
+                // Clear gear setup list
+                gearSetup = [];
+                localStorage.removeItem('mixtools_record_gear');
+                renderGearSetup();
+
+                // Clear timer without confirmation
+                resetTimerWithoutConfirm();
+
+                // Refresh to default
+                location.reload();
+            }
+        }
+
+        // Stopwatch Timer System
+        let timerInterval = null;
+        let timerRunning = false;
+        let timerElapsed = 0; // in milliseconds
+        let timerStartTime = 0; // epoch millisecond
+
+        function loadTimerState() {
+            const running = localStorage.getItem('mixtools_timer_running') === 'true';
+            const elapsed = parseInt(localStorage.getItem('mixtools_timer_elapsed') || '0', 10);
+            const startTime = parseInt(localStorage.getItem('mixtools_timer_starttime') || '0', 10);
+
+            timerElapsed = elapsed;
+
+            if (running && startTime > 0) {
+                timerRunning = true;
+                timerStartTime = startTime;
+                const sessionDelta = Date.now() - timerStartTime;
+                timerElapsed = elapsed + sessionDelta;
+                
+                document.getElementById('timer-start-btn').style.display = 'none';
+                document.getElementById('timer-pause-btn').style.display = 'inline-flex';
+                
+                startTimerInterval();
+            } else {
+                updateTimerDisplay(timerElapsed);
+            }
+        }
+
+        function updateTimerDisplay(ms) {
+            const totalSecs = Math.floor(ms / 1000);
+            const hrs = Math.floor(totalSecs / 3600);
+            const mins = Math.floor((totalSecs % 3600) / 60);
+            const secs = totalSecs % 60;
+
+            const format = (num) => String(num).padStart(2, '0');
+            document.getElementById('session-timer').innerText = `${format(hrs)}:${format(mins)}:${format(secs)}`;
+        }
+
+        function startTimerInterval() {
+            timerInterval = setInterval(() => {
+                const delta = Date.now() - timerStartTime;
+                updateTimerDisplay(timerElapsed + delta);
+            }, 500);
+        }
+
+        function startTimer() {
+            if (timerRunning) return;
+
+            timerRunning = true;
+            timerStartTime = Date.now();
+            localStorage.setItem('mixtools_timer_running', 'true');
+            localStorage.setItem('mixtools_timer_starttime', timerStartTime.toString());
+
+            document.getElementById('timer-start-btn').style.display = 'none';
+            document.getElementById('timer-pause-btn').style.display = 'inline-flex';
+
+            startTimerInterval();
+        }
+
+        function pauseTimer() {
+            if (!timerRunning) return;
+
+            clearInterval(timerInterval);
+            timerRunning = false;
+            
+            const sessionDelta = Date.now() - timerStartTime;
+            timerElapsed += sessionDelta;
+
+            localStorage.setItem('mixtools_timer_running', 'false');
+            localStorage.setItem('mixtools_timer_elapsed', timerElapsed.toString());
+            localStorage.setItem('mixtools_timer_starttime', '0');
+
+            document.getElementById('timer-start-btn').style.display = 'inline-flex';
+            document.getElementById('timer-pause-btn').style.display = 'none';
+
+            updateTimerDisplay(timerElapsed);
+        }
+
+        function resetTimer() {
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            const msg = lang === 'en'
+                ? "Are you sure you want to reset the session timer? This cannot be undone."
+                : "Bạn có chắc chắn muốn đặt lại bộ bấm giờ buổi thu? Thao tác này không thể hoàn tác.";
+            
+            if (confirm(msg)) {
+                resetTimerWithoutConfirm();
+            }
+        }
+
+        function resetTimerWithoutConfirm() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerElapsed = 0;
+            timerStartTime = 0;
+
+            localStorage.setItem('mixtools_timer_running', 'false');
+            localStorage.setItem('mixtools_timer_elapsed', '0');
+            localStorage.setItem('mixtools_timer_starttime', '0');
+
+            document.getElementById('timer-start-btn').style.display = 'inline-flex';
+            document.getElementById('timer-pause-btn').style.display = 'none';
+
+            updateTimerDisplay(0);
+        }
+
+        // Connector Inspector Data
+        const connectorData = {
+            xlr: {
+                name: 'XLR Connector',
+                nameVn: 'Jack cắm XLR (Canon)',
+                type: 'Balanced connection, typically used for microphone feeds or professional analog line-level runs.',
+                typeVn: 'Kết nối Balance cân bằng, chuyên dụng cho tín hiệu micro hoặc đường truyền line-level analog chuyên nghiệp.',
+                pins: 'Pin 1: Ground/Shield | Pin 2: Hot (+) | Pin 3: Cold (-)',
+                pinsVn: 'Chân 1: Tiếp địa (Ground) | Chân 2: Dương (+) | Chân 3: Âm (-)',
+                levelKey: 'mic'
+            },
+            trs: {
+                name: 'TRS 1/4" Phone Jack',
+                nameVn: 'Jack 6.35mm TRS (3 khấc)',
+                type: 'Balanced mono line-level audio or unbalanced stereo headphone cue feeds.',
+                typeVn: 'Kết nối Balance mono mức Line hoặc kết nối Unbalance stereo cho đường tai nghe kiểm âm.',
+                pins: 'Tip: Hot (+) | Ring: Cold (-) | Sleeve: Ground',
+                pinsVn: 'Đầu nhọn (Tip): Dương (+) | Vòng khấc (Ring): Âm (-) | Thân (Sleeve): Đất',
+                levelKey: 'line'
+            },
+            ts: {
+                name: 'TS 1/4" Phone Jack',
+                nameVn: 'Jack 6.35mm TS (2 khấc)',
+                type: 'Unbalanced high-impedance instrument cable (e.g. electric guitars, keyboard synths). Keep runs under 15 feet.',
+                typeVn: 'Kết nối Unbalance trở kháng cao chuyên dùng cho nhạc cụ (guitar điện, synth). Nên để dây ngắn dưới 5m.',
+                pins: 'Tip: Hot (+) Signal | Sleeve: Ground/Shield',
+                pinsVn: 'Đầu nhọn (Tip): Dương (+) | Thân (Sleeve): Đất',
+                levelKey: 'inst'
+            },
+            speak: {
+                name: 'Speakon NL4 Connector',
+                nameVn: 'Jack cắm Speakon (Neutrik)',
+                type: 'High-current, secure interlocking speaker cable. Delivers high voltage power from amplifiers to passive monitors.',
+                typeVn: 'Kết nối dòng điện cao, có ngàm khóa an toàn. Truyền tải điện áp lớn từ tăng âm công suất tới loa passive.',
+                pins: 'Terminals: 1+ / 1- (Main Channel) | 2+ / 2- (Aux Bi-Amp Channel)',
+                pinsVn: 'Cực kết nối: 1+ / 1- (Đường chính) | 2+ / 2- (Đường phụ Bi-Amp)',
+                levelKey: 'spk'
+            }
+        };
+
+        function selectConnector(id) {
+            document.querySelectorAll('.connector-pill').forEach(pill => {
+                pill.className = 'connector-pill';
+            });
+            
+            const pill = document.getElementById('pill-' + id);
+            if (!pill) return; // if collapsed or not loaded yet
+            
+            const data = connectorData[id];
+            pill.classList.add('active-pill-' + data.levelKey);
+
+            const infoBox = document.getElementById('connector-info-box');
+            infoBox.innerHTML = `
+                <div class="connector-label-row">
+                    <span style="color: var(--accent-primary); font-size: 1rem;">
+                        <span data-lang="en">${data.name}</span>
+                        <span data-lang="vn">${data.nameVn}</span>
+                    </span>
+                    <span style="text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.05);">
+                        <span data-lang="en">Pins Config</span><span data-lang="vn">Sơ đồ chân</span>
+                    </span>
+                </div>
+                <p style="margin-bottom: 6px; font-weight: 500; font-size: 0.82rem;">
+                    <span data-lang="en">${data.type}</span>
+                    <span data-lang="vn">${data.typeVn}</span>
+                </p>
+                <div style="font-family: ui-monospace, monospace; font-size: 0.76rem; color: var(--text-muted);">
+                    <span data-lang="en">${data.pins}</span>
+                    <span data-lang="vn">${data.pinsVn}</span>
+                </div>
+            `;
+
+            document.querySelectorAll('.level-row').forEach(row => {
+                row.classList.remove('highlighted');
+                const fill = row.querySelector('.meter-fill');
+                fill.style.width = '0%';
+            });
+
+            const rowId = 'row-' + data.levelKey;
+            const row = document.getElementById(rowId);
+            row.classList.add('highlighted');
+
+            const fillVal = data.levelKey === 'mic' ? '35%' : 
+                            data.levelKey === 'inst' ? '50%' :
+                            data.levelKey === 'line' ? '75%' : '92%';
+            
+            setTimeout(() => {
+                document.getElementById('fill-' + data.levelKey).style.width = fillVal;
+            }, 100);
+
+            const savedLang = localStorage.getItem('record_lang') || 'en';
+            setLanguage(savedLang);
+        }
+
+        function highlightFromRow(levelKey) {
+            let connectorId = 'xlr';
+            if (levelKey === 'inst') connectorId = 'ts';
+            if (levelKey === 'line') connectorId = 'trs';
+            if (levelKey === 'spk') connectorId = 'speak';
+
+            selectConnector(connectorId);
+        }
+
+        // Collapsible toggle controller
+        function toggleCollapsible() {
+            const wrapper = document.querySelector('.collapsible-wrapper');
+            const content = document.getElementById('collapsible-content');
+            const isCollapsed = content.style.display === 'none' || content.style.display === '';
+            
+            if (isCollapsed) {
+                content.style.display = 'grid';
+                wrapper.classList.add('active');
+                
+                // Trigger connector details fill if one is active
+                const selectedPill = document.querySelector('.connector-pill[class*="active-pill-"]');
+                if (selectedPill) {
+                    const id = selectedPill.id.replace('pill-', '');
+                    selectConnector(id);
+                } else {
+                    selectConnector('xlr'); // default active selection on expand
+                }
+            } else {
+                content.style.display = 'none';
+                wrapper.classList.remove('active');
+            }
+        }
+
+        // Styled Single-Language HTML Session Report Downloader
+        function downloadSessionReport() {
+            const lang = document.body.classList.contains('lang-vn') ? 'vn' : 'en';
+            const stopwatchVal = document.getElementById('session-timer').innerText;
+            const notesText = document.getElementById('session-notes').value || (lang === 'en' ? '(No notes recorded)' : '(Không có ghi chú nào được ghi lại)');
+            const currentDateTime = new Date().toLocaleString();
+
+            // Grab metadata fields
+            const engineer = document.getElementById('meta-engineer').value || 'N/A';
+            const assistant = document.getElementById('meta-assistant').value || 'N/A';
+            const singer = document.getElementById('meta-singer').value || 'N/A';
+            const project = document.getElementById('meta-project').value || 'N/A';
+            const song = document.getElementById('meta-song').value || 'N/A';
+            const album = document.getElementById('meta-album').value || 'N/A';
+
+            // Compile Gear list
+            let gearHtml = '';
+            if (gearSetup.length === 0) {
+                gearHtml = `<p style="color: #8292ab; font-style: italic;">${lang === 'en' ? 'No gear recorded.' : 'Không ghi nhận thiết bị nào.'}</p>`;
+            } else {
+                gearSetup.forEach(item => {
+                    let catLabel = item.category;
+                    if (item.category === 'Mic') catLabel = lang === 'en' ? '🎙️ Microphone' : '🎙️ Micro';
+                    if (item.category === 'Pre') catLabel = lang === 'en' ? '🎛️ Preamp' : '🎛️ Bộ khuếch đại';
+                    if (item.category === 'Interface') catLabel = lang === 'en' ? '🔌 Audio Interface' : '🔌 Soundcard / Interface';
+                    
+                    const badgeClass = item.category === 'Mic' ? 'badge-mic' : 
+                                       item.category === 'Pre' ? 'badge-pre' : 'badge-interface';
+                    
+                    gearHtml += `
+                        <div class="report-gear-item">
+                            <span class="gear-badge ${badgeClass}">${catLabel}</span>
+                            <span class="gear-text">${item.name}</span>
+                        </div>
+                    `;
+                });
+            }
+
+            // Compile Checklist (filtered to selected language only)
+            let checklistHtml = '';
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            checklistItems.forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const isChecked = checkbox.checked;
+                const textSpan = item.querySelector(lang === 'en' ? '[data-lang="en"]' : '[data-lang="vn"]');
+                const taskText = textSpan ? textSpan.innerText : '';
+                
+                checklistHtml += `
+                    <div class="report-task-item ${isChecked ? 'completed' : ''}">
+                        <div class="task-checkbox">${isChecked ? '✓' : ''}</div>
+                        <div class="task-text">${taskText}</div>
+                        <div class="task-status">${isChecked ? (lang === 'en' ? 'Completed' : 'Đã xong') : (lang === 'en' ? 'Pending' : 'Chưa xong')}</div>
+                    </div>
+                `;
+            });
+
+            // Compile Quick Notes
+            let quickNotesHtml = '';
+            if (quickNotes.length === 0) {
+                quickNotesHtml = `<p style="color: #8292ab; font-style: italic;">${lang === 'en' ? 'No quick notes recorded.' : 'Không có ghi chú nhanh nào.'}</p>`;
+            } else {
+                quickNotes.forEach(note => {
+                    quickNotesHtml += `
+                        <div class="report-note-item">
+                            <span class="note-time">[${note.time}]</span>
+                            <span class="note-text">${note.text}</span>
+                        </div>
+                    `;
+                });
+            }
+
+            const reportTitle = lang === 'en' ? 'Recording Session Report' : 'Báo Cáo Buổi Thu Âm';
+            
+            // Styled single language HTML template
+            const htmlReport = `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${reportTitle}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0d16;
+            --bg-card: #131a2a;
+            --border-color: #243147;
+            --text-main: #f8fafc;
+            --text-muted: #8292ab;
+            --accent-primary: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-green: #22c55e;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+        }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 40px 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .report-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .title h1 {
+            font-family: var(--font-display);
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .title p {
+            margin: 4px 0 0 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .timestamp {
+            font-family: ui-monospace, monospace;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .meta-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .meta-value {
+            font-size: 1rem;
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .report-gear-item {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 13, 22, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+        .gear-badge {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.72rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .badge-mic { background: rgba(56, 189, 248, 0.1); color: var(--accent-primary); border: 1px solid rgba(56, 189, 248, 0.15); }
+        .badge-pre { background: rgba(168, 85, 247, 0.1); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.15); }
+        .badge-interface { background: rgba(34, 197, 94, 0.1); color: var(--accent-green); border: 1px solid rgba(34, 197, 94, 0.15); }
+        .gear-text {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+        .report-task-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background: rgba(10,13,22,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .report-task-item.completed {
+            border-color: rgba(34, 197, 94, 0.2);
+            background: rgba(34, 197, 94, 0.02);
+        }
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+        .report-task-item.completed .task-checkbox {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: var(--accent-green);
+        }
+        .task-text {
+            flex-grow: 1;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        .report-task-item.completed .task-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+        .task-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+        .report-task-item.completed .task-status {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent-green);
+        }
+        .notes-content {
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+        }
+        .report-note-item {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 13, 22, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+        .note-time {
+            color: var(--accent-primary);
+            font-family: ui-monospace, monospace;
+            font-weight: 600;
+        }
+        .note-text {
+            color: #cbd5e1;
+        }
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <header>
+            <div class="title">
+                <h1>${lang === 'en' ? 'Recording Session Report' : 'Báo Cáo Buổi Thu Âm'}</h1>
+                <p>Studio Pro Recording Utilities</p>
+            </div>
+            <div class="timestamp">
+                ${currentDateTime}
+            </div>
+        </header>
+
+        <!-- Metadata Section -->
+        <div class="section">
+            <h2>${lang === 'en' ? 'Session Info' : 'Thông Tin Buổi Thu'}</h2>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Project' : 'Dự án'}</span>
+                    <span class="meta-value">${project}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Song / Track' : 'Bài hát'}</span>
+                    <span class="meta-value">${song}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Album' : 'Album'}</span>
+                    <span class="meta-value">${album}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Singer' : 'Ca sĩ'}</span>
+                    <span class="meta-value">${singer}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Recording Engineer' : 'Kỹ sư thu âm (RE)'}</span>
+                    <span class="meta-value">${engineer}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">${lang === 'en' ? 'Recording Assistant' : 'Trợ lý thu âm'}</span>
+                    <span class="meta-value">${assistant}</span>
+                </div>
+                <div class="meta-item" style="grid-column: span 2;">
+                    <span class="meta-label">${lang === 'en' ? 'Session Duration' : 'Thời lượng buổi thu'}</span>
+                    <span class="meta-value" style="color: var(--accent-primary); font-size: 1.2rem; font-family: ui-monospace, monospace;">${stopwatchVal}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gear Setup Section -->
+        <div class="section">
+            <h2>${lang === 'en' ? 'Studio Gear Setup' : 'Thiết Bị Sử Dụng'}</h2>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                ${gearHtml}
+            </div>
+        </div>
+
+        <!-- Task Checklist Section -->
+        <div class="section">
+            <h2>${lang === 'en' ? 'Assistant Tasks Checklist' : 'Checklist Công Việc Trợ Lý'}</h2>
+            ${checklistHtml}
+        </div>
+
+        <!-- Session Notes Section -->
+        <div class="section">
+            <h2>${lang === 'en' ? 'Session Workflow Notes' : 'Ghi Chú Buổi Thu'}</h2>
+            <div class="notes-content">${notesText}</div>
+        </div>
+
+        <!-- Quick Notes Section -->
+        <div class="section">
+            <h2>${lang === 'en' ? 'Timestamped Quick Notes' : 'Ghi Chú Nhanh Theo Thời Gian'}</h2>
+            ${quickNotesHtml}
+        </div>
+
+        <footer>
+            <p>${lang === 'en' ? '© 2026 Studio Pro Recording Utilities. All rights reserved.' : '© 2026 Studio Pro Recording Utilities. Bảo lưu mọi quyền.'}</p>
+        </footer>
+    </div>
+</body>
+</html>`;
+
+            const blob = new Blob([htmlReport], { type: 'text/html;charset=utf-8' });
+            const tempAnchor = document.createElement('a');
+            
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+            tempAnchor.download = `session_report_${timestamp}.html`;
+            tempAnchor.href = window.URL.createObjectURL(blob);
+            tempAnchor.style.display = 'none';
+            
+            document.body.appendChild(tempAnchor);
+            tempAnchor.click();
+            document.body.removeChild(tempAnchor);
+        }
+
+        // Initialize Settings on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load default language settings
+            const defaultLang = localStorage.getItem('mixtools_default_lang') || 'en';
+            const defSelect = document.getElementById('default-lang-select');
+            if (defSelect) defSelect.value = defaultLang;
+
+            // Load saved active language preference or fallback to default
+            const savedLang = localStorage.getItem('record_lang') || defaultLang;
+            setLanguage(savedLang);
+
+            // Initialize checklist states
+            initChecklist();
+
+            // Load autosave notes
+            loadNotes();
+
+            // Load metadata inputs
+            loadMetadata();
+
+            // Load quick notes list
+            loadQuickNotes();
+
+            // Load gear setup list
+            loadGearSetup();
+
+            // Load billing stopwatch state
+            loadTimerState();
+        });
+    </script>
+</body>
+</html>
